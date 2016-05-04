@@ -1,8 +1,8 @@
-Hitachi Optimizing Linkage Editor (Ver. 7.1.03.000)04-May-2016 21:36:48
+Hitachi Optimizing Linkage Editor (Ver. 7.1.03.000)04-May-2016 23:42:48
 
 *** Options ***
 
--subcommand=C:\Users\TAKER~1.TIM\AppData\Local\Temp\hmk452B.tmp
+-subcommand=C:\Users\TAKER~1.TIM\AppData\Local\Temp\hmkA1DE.tmp
 noprelink
 sdebug
 rom D=R
@@ -29,11 +29,11 @@ SECTION                            START      END         SIZE   ALIGN
 P_TOP
                                   00300200  0030020b         c   4
 P
-                                  0030020c  0030066f       464   4
+                                  0030020c  00300787       57c   4
 C
-                                  00300670  003006a7        38   4
+                                  00300788  003007ab        24   4
 D
-                                  003006a8  003006ab         4   4
+                                  003007ac  003007af         4   4
 B_BR_Size
                                   08100000  08100003         4   4
 B
@@ -55,105 +55,107 @@ FILE=X:\Projects\DerKemie\Debug\Kemie.obj
 
 SECTION=P
 FILE=X:\Projects\DerKemie\Debug\Kemie.obj
-                                  0030020c  00300257        4c
+                                  0030020c  0030036f       164
   _AddIn_main
-                                  0030020c        4c   func ,g         * 
+                                  0030020c        10   func ,g         * 
+  _render
+                                  0030021c       154   func ,g         * 
 FILE=X:\CASIO\fx-9860G SDK\OS\FX\lib\setup.obj
-                                  00300258  00300373       11c
+                                  00300370  0030048b       11c
   ___LINK_PROTECT
-                                  00300258         4   func ,g         * 
+                                  00300370         4   func ,g         * 
   _SetQuitHandler
-                                  0030025c         6   func ,g         * 
+                                  00300374         6   func ,g         * 
   _OnAppCloseDefault
-                                  00300262        54   func ,g         * 
+                                  0030037a        54   func ,g         * 
   __INITSCT_ADDIN
-                                  003002b6        48   func ,g         * 
+                                  003003ce        48   func ,g         * 
   _INIT_ADDIN_APPLICATION
-                                  003002fe        76   func ,g         * 
+                                  00300416        76   func ,g         * 
 FILE=_Bdel_cychdr
-                                  00300374  00300383        10
+                                  0030048c  0030049b        10
   _Bdel_cychdr
-                                  00300374         0   none ,g         * 
+                                  0030048c         0   none ,g         * 
 FILE=_Bdisp_AllClr_DDVRAM
-                                  00300384  00300393        10
+                                  0030049c  003004ab        10
   _Bdisp_AllClr_DDVRAM
-                                  00300384         0   none ,g         * 
+                                  0030049c         0   none ,g         * 
+FILE=_Bdisp_SetPoint_VRAM
+                                  003004ac  003004bb        10
+  _Bdisp_SetPoint_VRAM
+                                  003004ac         0   none ,g         * 
 FILE=_BfileFLS_CloseFile
-                                  00300394  003003a3        10
+                                  003004bc  003004cb        10
   _BfileFLS_CloseFile
-                                  00300394         0   none ,g         * 
+                                  003004bc         0   none ,g         * 
 FILE=_Bkey_Set_RepeatTime_Default
-                                  003003a4  003003b3        10
+                                  003004cc  003004db        10
   _Bkey_Set_RepeatTime_Default
-                                  003003a4         0   none ,g         * 
+                                  003004cc         0   none ,g         * 
 FILE=_CallbackAtQuitMainFunction
-                                  003003b4  003003c3        10
+                                  003004dc  003004eb        10
   _CallbackAtQuitMainFunction
-                                  003003b4         0   none ,g         * 
+                                  003004dc         0   none ,g         * 
 FILE=_flsFindClose
-                                  003003c4  003003d3        10
+                                  003004ec  003004fb        10
   _flsFindClose
-                                  003003c4         0   none ,g         * 
+                                  003004ec         0   none ,g         * 
 FILE=_getkey
-                                  003003d4  003003e3        10
+                                  003004fc  0030050b        10
   _GetKey
-                                  003003d4         0   none ,g         * 
+                                  003004fc         0   none ,g         * 
 FILE=_GLibAddinAplExecutionCheck
-                                  003003e4  003003f3        10
+                                  0030050c  0030051b        10
   _GLibAddinAplExecutionCheck
-                                  003003e4         0   none ,g         * 
+                                  0030050c         0   none ,g         * 
 FILE=_Hmem_SetMMU
-                                  003003f4  00300403        10
+                                  0030051c  0030052b        10
   _Hmem_SetMMU
-                                  003003f4         0   none ,g         * 
-FILE=_Print
-                                  00300404  00300413        10
-  _Print
-                                  00300404         0   none ,g         * 
+                                  0030051c         0   none ,g         * 
 FILE=dispbios
-                                  00300414  00300589       176
+                                  0030052c  003006a1       176
   _PrintMini
-                                  00300414        1c   func ,g         * 
+                                  0030052c        1c   func ,g         * 
   _locate
-                                  00300430        28   func ,g         * 
+                                  00300548        28   func ,g         * 
   _Bdisp_ReadArea_DD
-                                  00300458       132   func ,g         * 
+                                  00300570       132   func ,g         * 
 FILE=__divls
-                                  0030058c  0030063f        b4
+                                  003006a4  00300757        b4
   __divls
-                                  0030058c         0   none ,g         * 
+                                  003006a4         0   none ,g         * 
   divls_zero
-                                  0030062a         0   none ,l         * 
+                                  00300742         0   none ,l         * 
   A_errno
-                                  00300638         0   none ,l         * 
+                                  00300750         0   none ,l         * 
   n_zerono
-                                  0030063c         0   none ,l         * 
+                                  00300754         0   none ,l         * 
 FILE=_DD_GET
-                                  00300640  0030064f        10
+                                  00300758  00300767        10
   _DD_GET
-                                  00300640         0   none ,g         * 
+                                  00300758         0   none ,g         * 
 FILE=_locate
-                                  00300650  0030065f        10
+                                  00300768  00300777        10
   _locate_OS
-                                  00300650         0   none ,g         * 
+                                  00300768         0   none ,g         * 
 FILE=_PrintMiniSd
-                                  00300660  0030066f        10
+                                  00300778  00300787        10
   _PrintMiniSd
-                                  00300660         0   none ,g         * 
+                                  00300778         0   none ,g         * 
 
 SECTION=C
 FILE=addin_sct
-                                  00300694  003006a7        14
+                                  00300798  003007ab        14
   _B_BGN
-                                  00300694         0   none ,g         * 
+                                  00300798         0   none ,g         * 
   _B_END
-                                  00300698         0   none ,g         * 
+                                  0030079c         0   none ,g         * 
   _R_BGN
-                                  0030069c         0   none ,g         * 
+                                  003007a0         0   none ,g         * 
   _R_END
-                                  003006a0         0   none ,g         * 
+                                  003007a4         0   none ,g         * 
   _D_ROM
-                                  003006a4         0   none ,g         * 
+                                  003007a8         0   none ,g         * 
 
 SECTION=B_BR_Size
 FILE=X:\Projects\DerKemie\Debug\Kemie.obj
@@ -180,6 +182,9 @@ FILE=_Bdel_cychdr
 FILE=_Bdisp_AllClr_DDVRAM
   __JumpTableTOP
                                   80010070         0   none ,l         * 
+FILE=_Bdisp_SetPoint_VRAM
+  __JumpTableTOP
+                                  80010070         0   none ,l         * 
 FILE=_BfileFLS_CloseFile
   __JumpTableTOP
                                   80010070         0   none ,l         * 
@@ -199,9 +204,6 @@ FILE=_GLibAddinAplExecutionCheck
   __JumpTableTOP
                                   80010070         0   none ,l         * 
 FILE=_Hmem_SetMMU
-  __JumpTableTOP
-                                  80010070         0   none ,l         * 
-FILE=_Print
   __JumpTableTOP
                                   80010070         0   none ,l         * 
 FILE=__divls
