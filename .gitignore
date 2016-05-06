@@ -1,3 +1,4 @@
 *.dlw
+*.dlr
 Debug/**
 Init/**

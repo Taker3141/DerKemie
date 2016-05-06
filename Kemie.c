@@ -23,11 +23,14 @@ Atom;
 int selected = 0;
 int displayAtoms = 0;
 int camX = 0, camY = 0;
+DISPBOX left, across;
 Atom atoms[2];
 
 int AddIn_main(int isAppli, unsigned short OptionNum)
 {
 	unsigned int key;
+	left.left = 0; left.top = 0; left.right = 21; left.bottom = 63;
+	across.left = 22; across.right = 127;
 
 	atoms[0].number =  1; atoms[0].charge = 0; atoms[0].x = 3; atoms[0].y = 1; atoms[0].Electrons.eByte = 0x01;
 	atoms[1].number = 10; atoms[1].charge = 0; atoms[1].x = 3; atoms[1].y = 0; atoms[1].Electrons.eByte = 0xFF;
@@ -45,6 +48,10 @@ int AddIn_main(int isAppli, unsigned short OptionNum)
 			else displayAtoms = 0;
 		}
 		if(key == KEY_CTRL_EXIT) displayAtoms = 0;
+		if(key == KEY_CHAR_6) camX++;
+		if(key == KEY_CHAR_4) camX--;
+		if(key == KEY_CHAR_8) camY++;
+		if(key == KEY_CHAR_2) camY--;
 		render();
 	}
 
@@ -56,6 +63,12 @@ int render()
 	int i;
 	
 	Bdisp_AllClr_VRAM();
+		
+	renderAtom(atoms[0]);
+	renderAtom(atoms[1]);
+	renderAtom(atoms[2]);
+	
+	Bdisp_AreaClr_VRAM(&left);
 	for(i = 0; i < 64; i++) Bdisp_SetPoint_VRAM(21, i, 1);
 	for(i = 0; i < 22; i++) 
 	{
@@ -83,6 +96,8 @@ int render()
 	for(i = 0; i < 22; i++) Bdisp_SetPoint_VRAM(22, i + selected * 21, 1);
 	if(displayAtoms)
 	{
+		across.top = selected * 21; across.bottom = (selected + 1) * 21;
+		Bdisp_AreaClr_VRAM(&across);
 		for(i = 0; i < 106; i++) 
 		{
 			Bdisp_SetPoint_VRAM(22 + i, selected * 21, 1);
@@ -90,10 +105,6 @@ int render()
 		}
 		for(i = 0; i < 22; i++) Bdisp_SetPoint_VRAM(127, i + selected * 21, 1);
 	}
-	
-	renderAtom(atoms[0]);
-	renderAtom(atoms[1]);
-	renderAtom(atoms[2]);
 }
 
 char* symbols[] = {"H", "He", "Li", "Be", "B", "C", "N", "O", "F", "Ne", "Na", "Mg", "Al", "Si", "P", "S", "Cl", "Ar"};
@@ -101,7 +112,7 @@ int renderAtom(Atom a)
 {
 	int i;
 	int posX = (a.x * 15) - camX;
-	int posY = 63 - (a.y * 15) - camY;
+	int posY = 63 - (a.y * 15) + camY;
 	if(posX < -15 || posY < -15 || posX > 128 || posY > 64) return;
 	if(symbols[a.number - 1][1] != 0) PrintXY(posX + 1, posY - 10, symbols[a.number - 1], 0);
 	else PrintXY(posX + 4, posY - 10, symbols[a.number - 1], 0);
