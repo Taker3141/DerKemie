@@ -20,10 +20,13 @@ typedef struct
 }
 Atom;
 
-int selected = 0;
+int category = 0;
+int selectedX = 0;
 int displayAtoms = 0;
 int camX = 0, camY = 0;
 DISPBOX left, across;
+char* symbols[] = {"H", "He", "Li", "Be", "B", "C", "N", "O", "F", "Ne", "Na", "Mg", "Al", "Si", "P", "S", "Cl", "Ar", "K", "Ca", "Sc", "Ti", "V", "Cr", "Mn", "Fe", "Co", "Ni", "Cu", "Zn", "Ga", "Ge", "As", "Se", "Br", "Kr"};
+Atom cat1[16];
 Atom atoms[2];
 
 int AddIn_main(int isAppli, unsigned short OptionNum)
@@ -31,6 +34,19 @@ int AddIn_main(int isAppli, unsigned short OptionNum)
 	unsigned int key;
 	left.left = 0; left.top = 0; left.right = 21; left.bottom = 63;
 	across.left = 22; across.right = 127;
+	
+	cat1[0].number = 1; cat1[0].charge = 0; cat1[0].Electrons.eByte = 0x01;
+	cat1[1].number = 5; cat1[1].charge = 0; cat1[1].Electrons.eByte = 0x15;
+	cat1[2].number = 6; cat1[2].charge = 0; cat1[2].Electrons.eByte = 0x55;
+	cat1[3].number = 7; cat1[3].charge = 0; cat1[3].Electrons.eByte = 0x57;
+	cat1[4].number = 8; cat1[4].charge = 0; cat1[4].Electrons.eByte = 0x77;
+	cat1[5].number = 9; cat1[5].charge = 0; cat1[5].Electrons.eByte = 0x7F;
+	cat1[6].number = 14; cat1[6].charge = 0; cat1[6].Electrons.eByte = 0x55;
+	cat1[7].number = 15; cat1[7].charge = 0; cat1[7].Electrons.eByte = 0x57;
+	cat1[8].number = 16; cat1[8].charge = 0; cat1[8].Electrons.eByte = 0x77;
+	cat1[9].number = 17; cat1[9].charge = 0; cat1[9].Electrons.eByte = 0x7F;
+	cat1[10].number = 34; cat1[10].charge = 0; cat1[10].Electrons.eByte = 0x77;
+	cat1[11].number = 35; cat1[11].charge = 0; cat1[11].Electrons.eByte = 0x7F;
 
 	atoms[0].number =  1; atoms[0].charge = 0; atoms[0].x = 3; atoms[0].y = 1; atoms[0].Electrons.eByte = 0x01;
 	atoms[1].number = 10; atoms[1].charge = 0; atoms[1].x = 3; atoms[1].y = 0; atoms[1].Electrons.eByte = 0xFF;
@@ -40,12 +56,15 @@ int AddIn_main(int isAppli, unsigned short OptionNum)
 	while(1)
 	{
 		GetKey(&key);
-		if(key == KEY_CTRL_UP && selected > 0) selected--;
-		if(key == KEY_CTRL_DOWN && selected < 2) selected++;
+		if(key == KEY_CTRL_UP && category > 0) category--;
+		if(key == KEY_CTRL_DOWN && category < 2) category++;
+		if(key == KEY_CTRL_RIGHT && selectedX < 16) selectedX++;
+		if(key == KEY_CTRL_LEFT && selectedX > 0) selectedX--;
 		if(key == KEY_CTRL_EXE) 
 		{
 			if(!displayAtoms) displayAtoms = 1;
 			else displayAtoms = 0;
+			selectedX = 0;
 		}
 		if(key == KEY_CTRL_EXIT) displayAtoms = 0;
 		if(key == KEY_CHAR_6) camX++;
@@ -93,26 +112,34 @@ int render()
 	Bdisp_SetPoint_VRAM(8, 51, 1); Bdisp_SetPoint_VRAM(9, 51, 1); Bdisp_SetPoint_VRAM(11, 51, 1); Bdisp_SetPoint_VRAM(12, 51, 1);
 	Bdisp_SetPoint_VRAM(10, 50, 1);
 	
-	for(i = 0; i < 22; i++) Bdisp_SetPoint_VRAM(22, i + selected * 21, 1);
+	for(i = 0; i < 22; i++) Bdisp_SetPoint_VRAM(22, i + category * 21, 1);
 	if(displayAtoms)
 	{
-		across.top = selected * 21; across.bottom = (selected + 1) * 21;
+		across.top = category * 21; across.bottom = (category + 1) * 21;
 		Bdisp_AreaClr_VRAM(&across);
 		for(i = 0; i < 106; i++) 
 		{
-			Bdisp_SetPoint_VRAM(22 + i, selected * 21, 1);
-			Bdisp_SetPoint_VRAM(22 + i, (selected + 1) * 21, 1);
+			Bdisp_SetPoint_VRAM(22 + i, category * 21, 1);
+			Bdisp_SetPoint_VRAM(22 + i, (category + 1) * 21, 1);
 		}
-		for(i = 0; i < 22; i++) Bdisp_SetPoint_VRAM(127, i + selected * 21, 1);
+		for(i = 0; i < 22; i++) Bdisp_SetPoint_VRAM(127, i + category * 21, 1);
+		if(category == 0)
+		{
+			if(selectedX > 12) selectedX = 12;
+			for(i = 0; i < 6; i++) renderAtomAt(cat1[i + ((selectedX < 6) ? 0 : (selectedX - 6))], 26 + i * 16, 18);
+		}
 	}
 }
 
-char* symbols[] = {"H", "He", "Li", "Be", "B", "C", "N", "O", "F", "Ne", "Na", "Mg", "Al", "Si", "P", "S", "Cl", "Ar"};
 int renderAtom(Atom a)
 {
+	renderAtomAt(a, (a.x * 15) - camX, 63 - (a.y * 15) + camY);
+}
+
+int renderAtomAt(Atom a, int posX, int posY)
+{
 	int i;
-	int posX = (a.x * 15) - camX;
-	int posY = 63 - (a.y * 15) + camY;
+	
 	if(posX < -15 || posY < -15 || posX > 128 || posY > 64) return;
 	if(symbols[a.number - 1][1] != 0) PrintXY(posX + 1, posY - 10, symbols[a.number - 1], 0);
 	else PrintXY(posX + 4, posY - 10, symbols[a.number - 1], 0);
